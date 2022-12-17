@@ -1,0 +1,41 @@
+import time
+import rp2
+from machine import Pin
+
+@rp2.asm_pio(set_init=rp2.PIO.OUT_LOW)
+def blink():
+    label('inicio')
+    mov(x,invert(null))
+    jmp(pin,'uno')
+    label('cero')
+    set(pins, 0)
+    jmp(x_dec,'cero_bis')
+    jmp('fin')
+    label('cero_bis')
+    jmp(pin,'fin')
+    jmp('cero')
+    label('uno')
+    set(pins, 1)
+    jmp(x_dec,'uno_bis')
+    jmp('fin')
+    label('uno_bis')
+    nop()
+    jmp(pin,'uno')
+    label('fin')
+    mov(isr,x)
+    push(noblock)
+    jmp('inicio')
+
+   
+sm = rp2.StateMachine(
+    0,
+    blink,
+    freq=38000*100,
+    set_base=Pin(25),
+    jmp_pin= Pin(17, Pin.IN, Pin.PULL_UP)
+)
+
+sm.active(1)
+while True:
+    dat=sm.get()
+    print(2**32-dat,end=', ')
