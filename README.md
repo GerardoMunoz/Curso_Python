@@ -4,14 +4,8 @@ https://www.youtube.com/watch?v=qtWEm5NEZBg&list=PL1mPu0A4F0dCE_5kJxYyHq_4k16o3G
 
 ## Contents:
 
-1. **Tools and Markup Languages** *(1 week)*
-   - Examples of Markup Languages (HTML, LaTeX, Markdown)
-   - GitHub
-   - Git (*clone, add, commit, status, checkout, push, pull*)
-   - Jupyter and Colab
-   - IDEs (*IDLE, Thonny, VSCode, ...*)
-   
-2. **Language Basics** *(One or Two of: Python, JavaScript, Rust, ...)*
+
+1. **Language Basics** *(One or Two of: Python, JavaScript, Rust, ...)*
    - Elements of the Program
      - Flow, Control Sentences, and Functions
      - Testing and Documentation
@@ -61,6 +55,14 @@ https://www.youtube.com/watch?v=qtWEm5NEZBg&list=PL1mPu0A4F0dCE_5kJxYyHq_4k16o3G
   - IRQ (*Interrupt Request*)
   - FSM (*Finite State Machine*)
   - IoT (*Internet of Things*) using *Sockets or MQTT*
+
+- Tools and Markup Languages** *(1 week)*
+   - Examples of Markup Languages (HTML, LaTeX, Markdown)
+   - GitHub
+   - Git (*clone, add, commit, status, checkout, push, pull*)
+   - Jupyter and Colab
+   - IDEs (*IDLE, Thonny, VSCode, ...*)
+   
 
 ## Suggested Schedule for Computer Lab and Classroom
 
