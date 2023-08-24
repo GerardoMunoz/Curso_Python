@@ -2,6 +2,18 @@ Pio  Documentación
 
 https://docs.micropython.org/en/latest/rp2/quickref.html
 
+https://docs.micropython.org/en/latest/rp2/tutorial/pio.html#:~:text=The%20jmp%20%28x_dec%2C%20%22delay_high%22%29%20will%20keep%20looping%20to,the%20jmp%20for%20each%20of%20these%2032%20loops%29.
+
+https://docs.micropython.org/en/v1.17/library/rp2.StateMachine.html
+
+https://docs.micropython.org/en/latest/library/rp2.html
+
+
+-------------------------------------------
+
+
+https://docs.micropython.org/en/latest/rp2/quickref.html
+
 
 .. _rp2_quickref:
 
@@ -699,6 +711,13 @@ Methods
      Optionally configure it.
 
 ----------------------------
+
+
+
+
+
+
+
 
 https://docs.micropython.org/en/latest/library/rp2.html
 
