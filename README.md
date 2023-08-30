@@ -33,14 +33,17 @@ https://www.youtube.com/watch?v=qtWEm5NEZBg&list=PL1mPu0A4F0dCE_5kJxYyHq_4k16o3G
    - Matrix Operations (*Inverse and Pseudoinverse*)
      - Comparison of Iterative and Non-Iterative Algorithms in Terms of Complexity and Error
    
-4. **Machine Learning** (*Database CRUD Operations*)
-   - Nearest Neighbors
-     - Classification and Confusion Matrix
-     - Regression and Accuracy
-   - Bayesian Methods (*Classification and Regression*)
-   - Gradient Descent and Lasso (*Classification and Regression*)
+4. **Machine Learning** 
+  - Unsupervised method
+     - k-mean clustering algorithm
+  - Supervised method 
+     - Nearest Neighbors
+       - Classification and Confusion Matrix
+       - Regression and Accuracy
+     - Bayesian Methods (*Classification and Regression*)
+     - Gradient Descent and Lasso (*Classification and Regression*)
    
-5. **Applying the 'Model View Controller' Pattern to Web Development**
+6. **Applying the 'Model View Controller' Pattern to Web Development**
    - Database Operations (*CRUD*)
    - Frontend Development
    - Backend Development
