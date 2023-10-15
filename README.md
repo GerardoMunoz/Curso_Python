@@ -25,8 +25,8 @@ https://www.youtube.com/watch?v=qtWEm5NEZBg&list=PL1mPu0A4F0dCE_5kJxYyHq_4k16o3G
    - Definition of Algorithmic Complexity and Types of Problems
    - Significant Figures and Error Propagation in Iterated Equations
      - Gaussian Elimination using *kiRi + kjRj -> Rj* with *ki* and *kj* as integers
+     - Ill-conditioned system of linear equations
      - Chaos
-     - Error in the Intersection of Almost Parallel Lines
    - Roots of Polynomials
      - Analytical Formulas (*Degree 2, 3, and 4*)
      - Iterative Algorithms
