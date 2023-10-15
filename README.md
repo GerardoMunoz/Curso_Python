@@ -65,6 +65,7 @@ https://www.youtube.com/watch?v=qtWEm5NEZBg&list=PL1mPu0A4F0dCE_5kJxYyHq_4k16o3G
    - Git (*clone, add, commit, status, checkout, push, pull*)
    - Jupyter and Colab
    - IDEs (*IDLE, Thonny, VSCode, ...*)
+   - SCRUM Methodology
    
 
 ## Suggested Schedule for Computer Lab and Classroom
