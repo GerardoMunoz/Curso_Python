@@ -83,7 +83,10 @@ addr = socket.getaddrinfo('0.0.0.0', 80)[0][-1]
 
 
 s = socket.socket()
+s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
 s.bind(addr)
+
 s.listen(1)
 
 print('Listening on', addr)
@@ -100,8 +103,10 @@ while True:
         r = str(r)
         led_on = r.find('?led=on')
         led_off = r.find('?led=off')
+        led_quit = r.find('?led=quit')
         print('led_on = ', led_on)
         print('led_off = ', led_off)
+        print('led_quit = ', led_quit)
         if led_on > -1:
             print('LED ON')
             led.value(1)
@@ -109,6 +114,16 @@ while True:
         if led_off > -1:
             print('LED OFF')
             led.value(0)
+
+        if led_quit > -1:
+            print('QUIT')
+            cl.close()
+            #print('Connection closed')
+            s.close()
+            wlan.active(False)
+            wlan.disconnect()
+            print('Bye')
+            break
             
         response = get_html('web_server_cube.html')
         cl.send('HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n')
