@@ -65,7 +65,7 @@ wlan_status = wlan.status()
 blink_onboard_led(wlan_status)
 
 if wlan_status != 3:
-    raise RuntimeError('Wi-Fi connection failed')
+    raise RuntimeError('Wi-Fi connection failed ',wlan_status)
 else:
     print('Connected')
     status = wlan.ifconfig()
