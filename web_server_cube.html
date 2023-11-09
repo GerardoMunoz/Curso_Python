@@ -9,7 +9,8 @@
 		<script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.min.js"></script>
 	</head>
 	<body>
-		<h1>Pico W</h1>
+        <div id="arm"></div>
+        <h1>ARM</h1>
         <p>Control the onboard LED</p>
         <a href=\"?led=on\"><button>ON</button></a>&nbsp;
         <a href=\"?led=off\"><button>OFF</button></a>
@@ -24,7 +25,8 @@
 
 			const renderer = new THREE.WebGLRenderer();
 			renderer.setSize( width, height );
-			document.body.appendChild( renderer.domElement );
+			const arm_DOM = document.getElementById("arm");
+			arm_DOM.appendChild( renderer.domElement );
 
 			const geometry = new THREE.BoxGeometry( 1, 1, 1 );
 			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
