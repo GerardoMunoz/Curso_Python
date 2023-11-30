@@ -11,7 +11,7 @@
 	<body>
         <div id="arm"></div>
         <h1>ARM</h1>
-		
+		<div id="error"></div>
         <p>Control the onboard LED</p>
         <button onclick="led_on()">LED ON</button>
         <button onclick="led_off()">LED OFF</button>
@@ -51,6 +51,10 @@
 
 		// Define a small dot for visualization
 		let dot = new THREE.BoxGeometry(0.01, 0.01, 0.01);
+
+		// error label
+		const error_DOM = document.getElementById("error");
+		error_DOM.innerHTML = "Error="
 
 		// Set up the base of the mechanical arm
 		let geometry = new THREE.BoxGeometry(0.2, a1, 0.2);
@@ -146,6 +150,7 @@
 			positions[last_point + 2] = point.z;
 			last_point = last_point + 3;
 			line.geometry.attributes.position.needsUpdate = true;
+			error_DOM.innerHTML = "Error="+R.distanceTo(point)
 			
 			R_camara = bezier2(P0_camara, P1_camara, t_camara);
 			camera.position.set(R_camara.x,R_camara.y,R_camara.z)
