@@ -1,3 +1,3 @@
 # Sockets example
-* soc_intr_serv_cpy.py: server in CircuitPython that uses async function
-* soc_intr_cli_upy.py: client in MicroPython that uses Timer interrupt 
+Files were removed by https://github.com/adafruit/Adafruit_CircuitPython_asyncio/issues/35
+
