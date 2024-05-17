@@ -1,10 +1,6 @@
 import machine
 import time
 
-# Initialize GPIO pins for LEDs
-green_led = machine.Pin(15, machine.Pin.OUT)
-yellow_led = machine.Pin(14, machine.Pin.OUT)
-red_led = machine.Pin(13, machine.Pin.OUT)
 
 # Initialize GPIO pin for button
 button = machine.Pin(2, machine.Pin.IN, machine.Pin.PULL_DOWN)
@@ -15,19 +11,24 @@ winner_list = [123, 456, 789]
 # Lost number
 losing_number = 999
 
-def wait_char():
-            return input("Please, write a digit and press Enter ")
+def wait_char(port_ir):
+    # temporarily the keyboard is used
+    return input("Please, write a digit and press Enter ")
 
-def check_number():
+def check_number(port_ir=16,green=15,yellow=14,red=13):
+# Initialize GPIO pins for LEDs
+    green_led = machine.Pin(green, machine.Pin.OUT)
+    yellow_led = machine.Pin(yellow, machine.Pin.OUT)
+    red_led = machine.Pin(red, machine.Pin.OUT)
     while True:
         green_led.off()
         red_led.off()
         yellow_led.off()
         print('Press three digits')
         try:
-            c = int(wait_char())
-            d = int(wait_char())
-            u = int(wait_char())
+            c = int(wait_char(port_ir))
+            d = int(wait_char(port_ir))
+            u = int(wait_char(port_ir))
         except ValueError:
             print('Ups')
             continue
@@ -42,7 +43,7 @@ def check_number():
         else:
             yellow_led.on()
             print('Press * to continue')
-            while wait_char() != '*':
+            while wait_char(port_ir) != '*':
                 print('Press * to continue')
 
 # Call the function to start the game
