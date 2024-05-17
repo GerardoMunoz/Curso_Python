@@ -2,9 +2,6 @@ import machine
 import time
 
 
-# Initialize GPIO pin for button
-button = machine.Pin(2, machine.Pin.IN, machine.Pin.PULL_DOWN)
-
 # List of winner numbers
 winner_list = [123, 456, 789]
 
