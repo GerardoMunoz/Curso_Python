@@ -19,7 +19,6 @@ while True:
   print("Received data:", buffer[:bytes_received])  # P
   response = """
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <title>Hello World</title>
 </head>
@@ -27,7 +26,6 @@ while True:
     <h1>Hello, World!</h1>
 </body>
 </html>
-
 """
   conn.send(response)
   conn.close()
