@@ -16,7 +16,7 @@ while True:
   buffer = bytearray(1024)  # Create a mutable buffer
   bytes_received, address = conn.recvfrom_into(buffer)  # Receive data into the buffer and get the sender's address
   print("Received from:", address)
-  print("Received data:", buffer[:bytes_received])  # P
+  print("Received data:", buffer[:bytes_received]) 
   response = """
 <!DOCTYPE html>
 <head>
