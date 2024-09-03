@@ -126,10 +126,15 @@ while True:
             break
             
         response = get_html('web_server_cube.html')
-        cl.send('HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n')
-        cl.send(response)
+        cl.send("HTTP/1.1 200 OK\r\n")
+        cl.send("Content-Type: text/html\r\n")
+        cl.send("Connection: close\r\n\r\n")
+        chunk_size=1000
+        for i in range(0, len(response), chunk_size):
+            chunk = response[i:i + chunk_size]
+            cl.send(chunk)
         cl.close()
-        
+
     except OSError as e:
         cl.close()
         print('Connection closed')
