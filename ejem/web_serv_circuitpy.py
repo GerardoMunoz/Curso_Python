@@ -6,7 +6,6 @@ pool=socketpool.SocketPool(wifi.radio)
 
 print("wifi.radio",wifi.radio.hostname, wifi.radio.ipv4_address)
 s = pool.socket()
-s.setsockopt(pool.SOL_SOCKET, pool.SO_REUSEADDR, 1)
 s.bind(('', 80))
 s.listen(5)
 
