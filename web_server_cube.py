@@ -7,7 +7,6 @@ import ubinascii
 import machine
 import urequests as requests
 import time
-from secrets import secrets
 import socket
 
 # Set country to avoid possible errors
@@ -28,10 +27,7 @@ print('mac = ' + mac)
 # print(wlan.config('txpower'))
 
 # Load login data from different file for safety reasons
-ssid = secrets['ssid']
-pw = secrets['pw']
-
-wlan.connect(ssid, pw)
+wlan.connect('Ejemplo', '12345678')
 
 # Wait for connection with 10 second timeout
 timeout = 10
@@ -133,6 +129,7 @@ while True:
         for i in range(0, len(response), chunk_size):
             chunk = response[i:i + chunk_size]
             cl.send(chunk)
+            time.sleep_ms(100)
         cl.close()
 
     except OSError as e:
