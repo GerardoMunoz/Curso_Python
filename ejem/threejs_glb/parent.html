@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>three.js glb example</title>
+    <meta charset="utf-8">
+    <style>
+      * {
+        margin:0;
+        padding:0
+      }
+
+      body {
+        overflow:hidden;
+      }
+    </style>
+  </head>
+  <body>
+<!--
+    <script src="./cannon/libs/Three.js"></script>
+
+    <script src="./cannon/build/cannon.js"></script>
+
+		<script type="importmap">
+			{
+				"imports": {
+					//"cannon": "./cannon/build/cannon.js",
+					"three": "./three/build/three.module.js",
+					"three/addons/": "./three/examples/jsm/"
+				}
+			}
+            
+            
+		</script>
+        
+            -->
+    <script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
+
+//import {FBXLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js';
+import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js';
+
+		
+		//import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+		//import * as THREE from 'three';
+		//import * as CANNON from 'cannon';
+
+      var world, mass, body, shape, timeStep=1/60,
+         camera, scene, renderer, geometry, material, 
+         mesh,shoulder,loader,children,obj_by_name;
+
+		initThree();
+		const manager = new THREE.LoadingManager(onLoad);
+      
+		loader = new GLTFLoader( manager );
+		loader.load( './shoulder_blue.glb', function ( gltf ) {
+			console.log("gltf")
+			console.log(gltf.scene.children)
+			children=[...gltf.scene.children]
+			scene.add( gltf.scene );
+		} );
+
+       function onLoad(){
+		  let child;
+		  obj_by_name={};
+		  console.log(children);
+		  while (children.length != 0){
+			  child=children.shift()
+			  console.log(child["name"])
+			  children.push(...child.children)
+			  console.log(child.children)
+			  obj_by_name[child["name"]]=child
+		  }
+		  console.log("obj_by_name",obj_by_name)
+		  shoulder=obj_by_name["shoulder"]
+		console.log('shoulder',shoulder)
+		animate();
+	  }
+
+
+ 
+      function initThree() {
+
+          scene = new THREE.Scene();
+
+          camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 100 );
+          camera.position.set(4,5,6);
+ //         camera.position.y = -5;
+          camera.lookAt(0,0,0)
+          scene.add( camera );
+
+          //geometry = new THREE.BoxGeometry( 2, 2, 2 );
+          //material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } );
+
+          //mesh = new THREE.Mesh( geometry, material );
+          //scene.add( mesh );
+
+          renderer = new THREE.WebGLRenderer();
+          renderer.setSize( window.innerWidth, window.innerHeight );
+
+          document.body.appendChild( renderer.domElement );
+
+      }
+
+      function animate() {
+
+          requestAnimationFrame( animate );
+          shoulder.rotation.x += 0.01;
+		  //shoulder.rotation.y += 0.01;
+          renderer.render( scene, camera );
+
+      }
+
+  
+
+
+    </script>
+  </body>
+</html>
