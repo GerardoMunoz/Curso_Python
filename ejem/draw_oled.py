@@ -1,5 +1,5 @@
 
-
+import time
 import board
 import busio
 import adafruit_ssd1306 #https://github.com/adafruit/Adafruit_CircuitPython_Bundle/releases/download/20240910/adafruit-circuitpython-bundle-9.x-mpy-20240910.zip
@@ -22,7 +22,6 @@ draw = [
     "    **        **    ",
     "      **    **      ",
     "         **         ",
-    "         **         ",
     "      **    **      ",
     "    **        **    ",
     "  **            **  ",
@@ -42,19 +41,41 @@ draw = [
     "  **            **  ",
     "    **        **    ",
     "      **    **      ",
+    "         **         ",
+    "      **    **      ",
+    "    **        **    ",
+    "  **            **  ",
+    " **              ** ",
+    " **    **  **    ** ",
+    " **              ** ",
+    "  **            **  ",
+    "    **        **    ",
+    "      **    **      ",
+    "         **         ",
+    "      **    **      ",
+    "    **        **    ",
+    "  **            **  ",
+    " **              ** ",
+    " **    **  **    ** ",
+    " **              ** ",
+    "  **            **  ",
+    "    **        **    ",
     "      **    **      ",
     ]
 
-rows = len(draw)
+rows = 32#len(draw)
 columns = len(draw[0])
 columns2=128
 print('rows,columns',rows,columns)
 image_bytearray = bytearray(rows * columns)
 image_bytearray[0]=columns
-for i in range(0,rows,8):
-    for j in range(columns):
-        #print('i,j,k',i,j)
-        a=sum(0 if draw[i+k][j]==" " else 2**k for k in range(8))
-        display.buffer[i*columns2//8+j+1]=a
-display.show()
+for _ in range(11):
+    for l in range(11):
+        for i in range(0,rows,8):
+            for j in range(columns):
+                #print('i,j,k',i,j)
+                a=sum(0 if draw[i+k+l][j]==" " else 2**k for k in range(8))
+                display.buffer[i*columns2//8+j+1]=a
+        display.show()
+        #time.sleep(.05)
 
