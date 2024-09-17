@@ -1,7 +1,10 @@
+
+
 import board
 import busio
-import adafruit_ssd1306
-
+import adafruit_ssd1306 #https://github.com/adafruit/Adafruit_CircuitPython_Bundle/releases/download/20240910/adafruit-circuitpython-bundle-9.x-mpy-20240910.zip
+                        #https://github.com/adafruit/Adafruit_CircuitPython_Bundle/releases/
+                        # extract the files 'adafruit_ssd1306.mpy', 'adafruit_framebuf.mpy' and save in the dir '/lib'
 SCL, SDA = board.GP17, board.GP16
 i2c = busio.I2C(SCL, SDA)
 display = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
