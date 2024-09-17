@@ -72,9 +72,9 @@ image_bytearray[0]=columns
 for _ in range(11):
     for l in range(11):
         for i in range(0,rows,8):
-            for j in range(columns):
+            for j in range(columns2):
                 #print('i,j,k',i,j)
-                a=sum(0 if draw[i+k+l][j]==" " else 2**k for k in range(8))
+                a=sum(0 if draw[i+k+l][j%columns]==" " else 2**k for k in range(8))
                 display.buffer[i*columns2//8+j+1]=a
         display.show()
         #time.sleep(.05)
