@@ -29,8 +29,5 @@ while True:
   conn.send("HTTP/1.1 200 OK\r\n")
   conn.send("Content-Type: text/html\r\n")
   conn.send("Connection: close\r\n\r\n")
-  chunk_size=1000
-  for i in range(0, len(response), chunk_size):
-      chunk = response[i:i + chunk_size]
-      cl.send(chunk)
+  conn.send(response)
   conn.close()
