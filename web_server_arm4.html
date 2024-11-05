@@ -90,7 +90,7 @@
 		wrist.add(hand);
 
 		// Set up parameters for a line to visualize the arm trajectory
-		const MAX_POINTS = 1000;
+		const MAX_POINTS = 2000;
 		material = new THREE.LineBasicMaterial({ color: 0x0000ff });
 		geometry = new THREE.BufferGeometry();
 		const positions = new Float32Array(MAX_POINTS * 3);
@@ -102,13 +102,16 @@
 		scene.add(line);
 
 		// Define two points for the Bezier curve
-		const P0 = new THREE.Vector3(a2, a1 / 2, -a3);
-		const P1 = new THREE.Vector3(a2, a1 / 2, a3);
+		const P0 = new THREE.Vector3(a2, 0, -a3);
+		const P1 = new THREE.Vector3(a2, 2*a1 , -a3);
+		const P2 = new THREE.Vector3(a2, 2*a1 , a3);
+		const P3 = new THREE.Vector3(a2, 0, a3);
 		var t = 0;
 
-		var P0_camara = new THREE.Vector3(0, 5, 0);
-		var P1_camara = new THREE.Vector3(0, 0, 5);
-		var t_camara=0
+        let r = 5; // Radius of rotation
+        let angle = 0; // Initial angle in radians
+        let deltaAngle = 0.0; // Rotation angle increment per frame (in radians)
+        let vector = new THREE.Vector3(r * Math.cos(angle), r * Math.sin(angle), 0);
 		
 
 		// Start the animation loop
@@ -123,12 +126,16 @@
 			
 			// Calculate inverse kinematics and update arm positions
 			let th1p, th2p, th3p, R;
-			R = bezier2(P0, P1, t);
+			//R = bezier2(P0, P1, t);
+			R = bezier4(P0, P1, P2, P3, t);
 			[th1p, th2p, th3p] = inv_kin(R);
 			// Loop through the Bezier curve parameter
 			if (t <= 1) {
-				t = t + 0.01;
+				t = t + 0.0005;
 			}
+            else{
+                deltaAngle = 0.005
+            }
 
 
 			base.rotation.y = th1p;
@@ -148,16 +155,12 @@
 			line.geometry.attributes.position.needsUpdate = true;
 			error_DOM.innerHTML = "Error="+R.distanceTo(point)
 			
-			R_camara = bezier2(P0_camara, P1_camara, t_camara);
-			camera.position.set(R_camara.x,R_camara.y,R_camara.z)
+            angle += deltaAngle;
+            vector.x = r * Math.cos(angle);
+            vector.z = r * Math.sin(angle);
+            camera.position.set(vector.x, vector.y, vector.z);            
 			//console.log(camera.position)
 			camera.lookAt(0, 0, 0)
-			if (t_camara <= 1) {
-				t_camara = t_camara + 0.00033;
-			}
-			else {
-				t_camara = 0
-			}
 
 			// Render the scene
 			renderer.render(scene, camera);
@@ -203,6 +206,13 @@
 		function bezier2(P0, P1, t) {
 			const R = P0.clone().multiplyScalar(1 - t).add(P1.clone().multiplyScalar(t));
 			return R;
+		}
+		function bezier4(P0, P1, P2, P3, t) {
+			const R0 = P0.clone().multiplyScalar((1 - t)**3);
+			const R1 = P1.clone().multiplyScalar((1 - t)**2).multiplyScalar(3*t);
+			const R2 = P2.clone().multiplyScalar(1 - t).multiplyScalar(3*t**2);
+			const R3 = P3.clone().multiplyScalar(t**3);
+			return R0.add(R1).add(R2).add(R3);
 		}
 		
 		</script>
