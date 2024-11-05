@@ -24,10 +24,10 @@
 		const width = window.innerWidth;
 		const height = window.innerHeight / 2;
 		const scene = new THREE.Scene();
-		const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+		const camera = new THREE.PerspectiveCamera(15, width / height, 0.1, 1000);
 		camera.position.x = 0;
-		camera.position.y = 5;
-		camera.position.z = 0;
+		camera.position.y = 25;
+		camera.position.z = 25;
 		camera.lookAt(0, 0, 0);
 
 		// Define a point in 3D space
@@ -102,16 +102,16 @@
 		scene.add(line);
 
 		// Define two points for the Bezier curve
-		const P0 = new THREE.Vector3(a2, 0, -a3);
-		const P1 = new THREE.Vector3(a2, 2*a1 , -a3);
-		const P2 = new THREE.Vector3(a2, 2*a1 , a3);
-		const P3 = new THREE.Vector3(a2, 0, a3);
+		const P0 = new THREE.Vector3(0, 0, a3/4);
+		const P1 = new THREE.Vector3(0, 2*a1 , a3/4);
+		const P2 = new THREE.Vector3(0, 2*a1 , 3*a2/4+3*a3/4);
+		const P3 = new THREE.Vector3(0, 0, 3*a2/4+3*a3/3);
 		var t = 0;
 
-        let r = 5; // Radius of rotation
+        let r = 15; // Radius of rotation
         let angle = 0; // Initial angle in radians
         let deltaAngle = 0.0; // Rotation angle increment per frame (in radians)
-        let vector = new THREE.Vector3(r * Math.cos(angle), r * Math.sin(angle), 0);
+        let vector = new THREE.Vector3(r * Math.cos(angle), a1,r * Math.sin(angle));
 		
 
 		// Start the animation loop
@@ -131,7 +131,7 @@
 			[th1p, th2p, th3p] = inv_kin(R);
 			// Loop through the Bezier curve parameter
 			if (t <= 1) {
-				t = t + 0.0005;
+				t = t + 0.002;
 			}
             else{
                 deltaAngle = 0.005
@@ -157,6 +157,7 @@
 			
             angle += deltaAngle;
             vector.x = r * Math.cos(angle);
+			vector.y = a1;
             vector.z = r * Math.sin(angle);
             camera.position.set(vector.x, vector.y, vector.z);            
 			//console.log(camera.position)
