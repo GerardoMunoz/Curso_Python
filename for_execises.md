@@ -18,3 +18,4 @@
 
 * Calculate Mean: Write a function that takes a list of numbers as input and returns their mean (average). For example, given the list [1, 2, 3, 4, 5], the function should return 3.0.
 
+* Diagonal Matrix: Check that a matrix is ​​diagonal.
