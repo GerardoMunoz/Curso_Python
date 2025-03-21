@@ -9,6 +9,8 @@ https://docs.micropython.org/en/v1.17/library/rp2.StateMachine.html
 https://docs.micropython.org/en/latest/library/rp2.html
 
 
+https://github.com/raspberrypi/pico-examples
+
 -------------------------------------------
 
 
