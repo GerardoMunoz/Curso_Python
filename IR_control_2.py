@@ -10,14 +10,14 @@ PIO_FREQ = 10_000_000
 
 # Como queremos probar inicialmente:
 # 1 cuenta ≈ 1 us
-OFF_THRESHOLD_US = 20000
+on_THRESHOLD_US = 20000
 
 
 @rp2.asm_pio(set_init=rp2.PIO.OUT_LOW)
 def count1():
 
     # =====================================================
-    # Y = OFF threshold
+    # Y = on threshold
     # =====================================================
 
     pull(block)
@@ -27,107 +27,112 @@ def count1():
     # Estado inicial
     # =====================================================
 
-    jmp(pin, "OFF_ON")
+    jmp(pin, "on_off")
 
     # =====================================================
-    # OFF
+    # on
     # =====================================================
 
-    label("ON_OFF")
+    label("off_on")
 
     mov(x, y)
 
-    label("OFF_LOOP")
+    label("on_LOOP")
 
     # -----------------------------------------------------
     # Decrementamos X
     # -----------------------------------------------------
 
-    jmp(x_dec, "OFF_DUMMY")
+    jmp(x_dec, "on_DUMMY") #1
 
     
     # -----------------------------------------------------
-    # Permanecemos en OFF hasta que aparezca ON
+    # Permanecemos en on hasta que aparezca off
     # -----------------------------------------------------
 
-    label("OFF_SLEEP")
+    label("on_SLEEP")
 
-    jmp(pin, "OFF_ON")
-    jmp("OFF_SLEEP")
+    jmp(pin, "on_off")
+    jmp("on_SLEEP")
 
 
     # -----------------------------------------------------
-    # OFF todavía no terminó
+    # on todavía no terminó
     # -----------------------------------------------------
 
-    label("OFF_DUMMY")
+    label("on_DUMMY") 
 
-    # ¿Terminó OFF porque apareció ON?
-    jmp(pin, "OFF_END")
+    # ¿Terminó on porque apareció off?
+    jmp(pin, "on_END") #2
 
     # Padding
-    nop()[6]
+    nop()[6]           #3
 
-    jmp("OFF_LOOP")
+    jmp("on_LOOP")     #4
 
 
     # -----------------------------------------------------
-    # OFF ya terminó
+    # on ya terminó
     # -----------------------------------------------------
 
-    label("OFF_END")
+    label("on_END")
 
-    mov(isr, invert(x))
+    mov(isr, invert(x))#
     push(noblock)
 
-    jmp("OFF_ON")
+    jmp("on_off")
 
 
     # =====================================================
-    # OFF → ON
+    # on → off
     # =====================================================
 
-    label("OFF_ON")
+    label("on_off")
 
     # X = 0xFFFFFFFF
     mov(x, y)
 
 
     # =====================================================
-    # ON
+    # off
     # =====================================================
 
-    label("ON_LOOP")
+    label("off_LOOP")
 
-    # Mientras siga ON seguimos contando
-    jmp(x_dec, "ON_DUMMY")
+    # Mientras siga off seguimos contando
+    jmp(x_dec, "off_DUMMY") #1
 
     mov(isr, null)
     push(noblock)
 
+    # Si pasa on_THRESHOLD_US esperamos el cero
 
-    label("ON_DUMMY")
+    label("off_SLEEP")
+    jmp(pin,"off_SLEEP")
+    jmp("off_on")
 
-    nop()[7]
+    label("off_DUMMY")
 
-    # ¿Seguimos ON?
-    jmp(pin, "ON_LOOP")
+    nop()[7]             #2
+
+    # ¿Seguimos off?
+    jmp(pin, "off_LOOP")  #3
 
 
     # -----------------------------------------------------
-    # ON → OFF
+    # off → on
     #
     # X contiene el contador restante.
     # Lo enviamos directamente.
     #
     # Al interpretarlo como signed32 será negativo,
-    # por lo que Python puede distinguirlo de ON.
+    # por lo que Python puede distinguirlo de off.
     # -----------------------------------------------------
 
-    mov(isr, invert(x))
+    mov(isr, x)#
     push(noblock)
 
-    jmp("ON_OFF")
+    jmp("off_on")
     
 
 # =========================================================
@@ -144,12 +149,12 @@ sm = rp2.StateMachine(
 sm.active(1)
 
 # Cargar threshold
-sm.put(OFF_THRESHOLD_US)
+sm.put(on_THRESHOLD_US)
 
 
 print("IR reader iniciado")
 print("PIO_FREQ:", PIO_FREQ)
-print("OFF threshold:", OFF_THRESHOLD_US, "us")
+print("on threshold:", on_THRESHOLD_US, "us")
 print()
 
 
@@ -164,24 +169,24 @@ while True:
         raw = sm.get()
 
         # -------------------------------------------------
-        # 0 = OFF timeout
+        # 0 = on timeout
         # -------------------------------------------------
 
         if raw == 0:
             print("0  -> END")
 
         # -------------------------------------------------
-        # ON / OFF
+        # off / on
         # -------------------------------------------------
 
         else:
 
             # Convertimos uint32 → int32
             if raw & 0x80000000:
-                value = raw - 0x100000000
+                value = 0x100000000 -raw-on_THRESHOLD_US
             else:
-                value = raw
+                value = on_THRESHOLD_US-raw
 
-            print(value, end=', ')
+            print(-value, end=', ')
 
-    time.sleep_ms(1)
+    #time.sleep_ms(1)
